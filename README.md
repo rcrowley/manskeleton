@@ -28,4 +28,6 @@ Richard Crowley <r@rcrowley.org>
 
 ## SEE ALSO
 
-<http://github.com/rtomayko/ron>
+`ron`(1) is used by the generated makefiles to render man pages: <http://github.com/rtomayko/ron>
+
+`gem-man`(1) inspired this program and provides an alternative to the environment-based method above for finding man pages in non-standard locations: <http://github.com/defunkt/gem-man>
