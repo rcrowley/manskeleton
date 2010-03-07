@@ -1,0 +1,25 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+bindir=@bindir@
+datarootdir=@datarootdir@
+mandir=@mandir@
+INSTALL=@INSTALL@
+
+all:
+	@true
+
+install:
+	$(INSTALL) -d $(DESTDIR)$(bindir)
+	$(INSTALL) bin/manskeleton $(DESTDIR)$(bindir)/
+	$(INSTALL) -d $(DESTDIR)$(mandir)/man1
+	$(INSTALL) man/man1/manskeleton.1.gz $(DESTDIR)$(mandir)/man1/
+ 
+uninstall:
+	rm -f $(DESTDIR)$(bindir)/manskeleton
+	rm -f $(DESTDIR)$(mandir)/man1/manskeleton.1.gz
+	rmdir --ignore-fail-on-non-empty $(DESTDIR)$(mandir)/man1
+
+man:
+	@make -C man all
+
+.PHONY: all install uninstall man

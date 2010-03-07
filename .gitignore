@@ -1,4 +1,4 @@
-man/configure
-man/config.*
-man/autom4te.cache
+configure
+config.*
+autom4te.cache
 Makefile
