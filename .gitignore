@@ -1,0 +1,4 @@
+man/configure
+man/config.*
+man/autom4te.cache
+Makefile

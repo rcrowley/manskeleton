@@ -1,0 +1,111 @@
+#!/bin/sh
+
+usage() {
+	echo "Usage: $(basename $0) [-1] [-2] [-3] [-4] [-5] [-6] [-7] [-8]" >&2
+	echo "       [-d <dirname>] [-e <extension>]" >&2
+	exit 1
+}
+
+# Note which sections we should support.
+DIRNAME=.
+EXT=md
+while getopts 12345678e: name; do
+	case $name in
+		1) SECTIONS="$SECTIONS man1";;
+		2) SECTIONS="$SECTIONS man2";;
+		3) SECTIONS="$SECTIONS man3";;
+		4) SECTIONS="$SECTIONS man4";;
+		5) SECTIONS="$SECTIONS man5";;
+		6) SECTIONS="$SECTIONS man6";;
+		7) SECTIONS="$SECTIONS man7";;
+		8) SECTIONS="$SECTIONS man8";;
+		d) DIRNAME=$OPTARG;;
+		e) EXT=$OPTARG;;
+		*) usage;;
+	esac
+done
+MAKEFILES=Makefile
+for SECTION in $SECTIONS; do
+	MAKEFILES="$MAKEFILES $SECTION/Makefile"
+done
+
+# man/configure.ac and man/Makefile.in.
+echo "[manskeleton] building $DIRNAME/man/configure.ac and $DIRNAME/man/Makefile.in" >&2
+mkdir -p $DIRNAME/man
+cat >$DIRNAME/man/configure.ac <<EOF
+#                                               -*- Autoconf -*-
+# Process this file with autoconf to produce a configure script.
+ 
+AC_PREREQ([2.64])
+AC_INIT([manskeleton], [0.0.0], [])
+ 
+# Checks for programs.
+AC_PATH_PROG([ron], [ron], [], [\$PATH:/var/lib/gems/1.8/bin])
+AC_PATH_PROG([gzip], [gzip], [], [\$PATH])
+ 
+# Checks for libraries.
+ 
+# Checks for header files.
+ 
+# Checks for typedefs, structures, and compiler characteristics.
+ 
+# Checks for library functions.
+ 
+AC_CONFIG_FILES([$MAKEFILES])
+AC_OUTPUT
+EOF
+cat >$DIRNAME/man/Makefile.in <<EOF
+all:$SECTIONS
+
+EOF
+for SECTION in $SECTIONS; do
+	cat >>$DIRNAME/man/Makefile.in <<EOF
+$SECTION:
+	@make -C $SECTION all
+
+EOF
+done
+cat >>$DIRNAME/man/Makefile.in <<EOF
+clean:
+	rm -f man1/*.1.gz man2/*.2.gz man3/*.3.gz man4/*.4.gz \\
+		man5/*.5.gz man6/*.6.gz man7/*.7.gz man8/*.8.gz
+
+.PHONY: all$SECTIONS clean
+EOF
+
+# man/*/Makefile.in.
+for SECTION in $SECTIONS; do
+	echo "[manskeleton] building $DIRAME/man/$SECTION/Makefile.in" >&2
+	mkdir -p $DIRNAME/man/$SECTION
+	cat >$DIRNAME/man/$SECTION/Makefile.in <<EOF
+ron=@ron@
+gzip=@gzip@
+
+RON=\$(wildcard *.$EXT)
+ROFF=\$(RON:.$EXT=)
+
+all: clean \$(ROFF)
+
+%.$(echo $SECTION | sed s/man//):
+ifneq (, \$(ron))
+	\$(ron) -b \$@.$EXT
+	chmod 644 \$@
+ifneq (, \$(gzip))
+	\$(gzip) -f \$@
+endif
+endif
+
+clean:
+	rm -f \$(ROFF)
+
+.PHONY: all clean
+EOF
+done
+
+# Build the Makefiles.
+echo "[manskeleton] configuring and building makefiles" >&2
+cd $DIRNAME/man
+autoconf
+./configure
+
+echo "[manskeleton] build your makefiles with 'make -C man'" >&2
