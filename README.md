@@ -9,6 +9,10 @@ manskeleton(1) -- build skeleton man paths
 
 Builds a skeleton directory and makefiles for turning `ron`(1)-compatible markdown files into man pages.  Desired sections are given as command line options.  If more sections become necessary later, it is safe to re-run `manskeleton` with more options.
 
+The directory structure build by `manskeleton` will allow gems and other packages installed in non-standard locations to provide man pages by setting `MANPATH`:
+
+    export MANPATH=$(for MAN in /var/lib/gems/1.8/gems/*/man; do echo -n :$MAN; done)
+
 ## OPTIONS
 
 * `-1`, `-2`, `-3`, `-4`, `-5`, `-6`, `-7`, `-8`:
