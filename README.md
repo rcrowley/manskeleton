@@ -7,7 +7,7 @@ manskeleton(1) -- build skeleton man paths
 
 ## DESCRIPTION
 
-Builds a skeleton directory and makefiles for turning `ron`(1)-compatible markdown files into man pages.  Desired sections are given as command line options.  If more sections become necessary later, it is safe to re-run `manskeleton` with more options.
+Builds a skeleton directory and makefiles for turning `ronn`(1)-compatible markdown files into man pages.  Desired sections are given as command line options.  If more sections become necessary later, it is safe to re-run `manskeleton` with more options.
 
 ## OPTIONS
 
@@ -16,7 +16,7 @@ Builds a skeleton directory and makefiles for turning `ron`(1)-compatible markdo
 * `-d` _dirname_:
   Build starting at _dirname_.  Defaults to the current directory.  A directory called _man/_ will be created within this directory.
 * `-e` _extension_:
-  File extension used for `ron`(1)-compatible markdown files.  Defaults to _md_ because GitHub renders files with this extension.
+  File extension used for `ronn`(1)-compatible markdown files.  Defaults to _md_ because GitHub renders files with this extension.
 
 ## EXAMPLES
 
@@ -34,6 +34,8 @@ Richard Crowley <r@rcrowley.org>
 
 ## SEE ALSO
 
-`ron`(1) is used by the generated makefiles to render man pages: <http://github.com/rtomayko/ron>
+`manskeleton`'s source code is available at <http://github.com/rcrowley/manskeleton>.
+
+`ronn`(1) is used by the generated makefiles to render man pages: <http://github.com/rtomayko/ron>
 
 `gem-man`(1) inspired this program and provides an alternative to the environment-based method above for finding man pages in non-standard locations: <http://github.com/defunkt/gem-man>

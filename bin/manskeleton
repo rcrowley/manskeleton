@@ -40,7 +40,7 @@ AC_PREREQ([2.64])
 AC_INIT([manskeleton], [0.0.0], [])
  
 # Checks for programs.
-AC_PATH_PROG([ron], [ron], [], [\$PATH:/var/lib/gems/1.8/bin])
+AC_PATH_PROG([ronn], [ronn], [], [\$PATH:/var/lib/gems/1.8/bin])
 AC_PATH_PROG([gzip], [gzip], [], [\$PATH])
  
 # Checks for libraries.
@@ -78,17 +78,17 @@ for SECTION in $SECTIONS; do
 	echo "[manskeleton] building $DIRAME/man/$SECTION/Makefile.in" >&2
 	mkdir -p $DIRNAME/man/$SECTION
 	cat >$DIRNAME/man/$SECTION/Makefile.in <<EOF
-ron=@ron@
+ronn=@ronn@
 gzip=@gzip@
 
-RON=\$(wildcard *.$EXT)
-ROFF=\$(RON:.$EXT=)
+RONN=\$(wildcard *.$EXT)
+ROFF=\$(RONN:.$EXT=)
 
 all: clean \$(ROFF)
 
 %.$(echo $SECTION | sed s/man//):
-ifneq (, \$(ron))
-	\$(ron) -b \$@.$EXT
+ifneq (, \$(ronn))
+	\$(ronn) -b \$@.$EXT
 	chmod 644 \$@
 ifneq (, \$(gzip))
 	\$(gzip) -f \$@
