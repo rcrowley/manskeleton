@@ -9,7 +9,7 @@ usage() {
 # Note which sections we should support.
 DIRNAME=.
 EXT=md
-while getopts 12345678e: name; do
+while getopts 12345678de: name; do
 	case $name in
 		1) SECTIONS="$SECTIONS man1";;
 		2) SECTIONS="$SECTIONS man2";;

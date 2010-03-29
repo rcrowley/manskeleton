@@ -28,6 +28,8 @@ A better, though slower, solution is to alias `man`(1) to recalculate your manpa
 
 	alias man='man --manpath=$(echo -n $(manpath); for MAN in /var/lib/gems/1.8/gems/*/man; do echo -n :$MAN; done)'
 
+Now, `gem-man`(1)'s `-s` option appears to be the best way to ensure man pages are found no matter what.
+
 ## AUTHOR
 
 Richard Crowley <r@rcrowley.org>
@@ -36,6 +38,6 @@ Richard Crowley <r@rcrowley.org>
 
 `manskeleton`'s source code is available at <http://github.com/rcrowley/manskeleton>.
 
-`ronn`(1) is used by the generated makefiles to render man pages: <http://github.com/rtomayko/ron>
+`ronn`(1) is used by the generated makefiles to render man pages: <http://github.com/rtomayko/ronn>
 
 `gem-man`(1) inspired this program and provides an alternative to the environment-based method above for finding man pages in non-standard locations: <http://github.com/defunkt/gem-man>
