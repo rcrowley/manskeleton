@@ -96,7 +96,7 @@ endif
 endif
 
 clean:
-	rm -f \$(ROFF)
+	rm -f \$(ROFF:=.gz)
 
 .PHONY: all clean
 EOF
