@@ -1,0 +1,9 @@
+Package: manskeleton
+Version: 0.1-1
+Section: devel
+Priority: optional
+Essential: no
+Architecture: all
+Depends: bash
+Maintainer: Richard Crowley <r@rcrowley.org>
+Description: 

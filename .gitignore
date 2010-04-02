@@ -1,4 +1,6 @@
-configure
-config.*
+*.swp
+autoscan.log
+configure.scan
 autom4te.cache
+config.*
 Makefile
